@@ -2,6 +2,7 @@ package com.if5b.bukusqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
@@ -9,54 +10,77 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
+
     private Context ctx;
-    private static final String DATABASE_NAME = "db_buku";
+    private static final String DATABASE_NAME = "myFirstDB";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String TABLE_NAME = "tbl_buku";
+    private static final String TABLE_NAME = "tbBuku";
     private static final String FIELD_ID = "id";
-    private static final String FIELD_JUDUL = "judul";
-    private static final String FIELD_PENULIS = "penulis";
-    private static final String FIELD_TAHUN = "tahun";
-
+    private static final String FIELD_TITLE = "title";
+    private static final String FIELD_AUTHOR = "author";
+    private static final String FIELD_YEAR = "year";
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.ctx = context;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
         String query = "CREATE TABLE " + TABLE_NAME + " (" +
                 FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                FIELD_JUDUL + " TEXT, " +
-                FIELD_PENULIS + " TEXT, " +
-                FIELD_TAHUN + " INTEGER ); ";
-
-        db.execSQL(query);
+                FIELD_TITLE + " TEXT, " + FIELD_AUTHOR + " TEXT, " +
+                FIELD_YEAR + " INTEGER ); ";
+        sqLiteDatabase.execSQL(query);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(db);
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 
-    public long tambahBuku(String judul, String penulis, int tahun) {
+    public long addBook(String title, String author, int year) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(FIELD_JUDUL, judul);
-        cv.put(FIELD_PENULIS, penulis);
-        cv.put(FIELD_TAHUN, tahun);
+        cv.put(FIELD_TITLE, title);
+        cv.put(FIELD_AUTHOR, author);
+        cv.put(FIELD_YEAR, year);
 
-        long eksekusi = db.insert(TABLE_NAME, null, cv);
-
-        return eksekusi;
-
-//        if (eksekusi == -1) {
-//            Toast.makeText(ctx, "Gagal menambah Data Buku!", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(ctx, "Buku Berhasil Ditambah!", Toast.LENGTH_SHORT).show();
-//        }
+        long result = db.insert(TABLE_NAME, null, cv);
+        return result;
     }
+
+    public long editBookById(String id, String title, String author, int year) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(FIELD_TITLE, title);
+        cv.put(FIELD_AUTHOR, author);
+        cv.put(FIELD_YEAR, year);
+
+        long result = db.update(TABLE_NAME, cv, "id = ?", new String[]{id});
+        return result;
+    }
+
+    public Cursor getAllBook() {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+
+        return cursor;
+    }
+
+    public long deleteBookById(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME,"id = ?", new String[]{id});
+        return result;
+    }
+
 }

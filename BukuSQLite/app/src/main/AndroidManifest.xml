@@ -13,17 +13,25 @@
         android:theme="@style/Theme.BukuSQLite"
         tools:targetApi="31">
         <activity
-            android:name=".TambahActivity"
-            android:label="Tambah Buku"
-            android:parentActivityName=".MainActivity"
-            android:exported="false">
+            android:name=".EditActivity"
+            android:exported="false"
+            android:label="Ubah buku"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".InsertActivity"
+            android:exported="false"
+            android:label="Tambah buku"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="Data Buku"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

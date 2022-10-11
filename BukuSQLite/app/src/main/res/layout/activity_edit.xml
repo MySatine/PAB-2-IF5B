@@ -4,58 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TambahActivity">
+    tools:context=".EditActivity">
 
     <LinearLayout
-        android:id="@+id/ll_tambah_buku"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="32dp"
+        android:orientation="vertical"
         android:layout_marginRight="32dp"
-        android:orientation="vertical">
-
+        android:layout_marginLeft="32dp"
+        android:layout_centerInParent="true"
+        >
         <TextView
-            android:id="@+id/tv_judul_layout"
+            android:id="@+id/tvJudulLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="UBAH DATA BUKU"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="32dp"
-            android:text="INPUT DATA BUKU"
-            android:textSize="20sp" />
-
+            />
         <EditText
-            android:id="@+id/et_judul"
+            android:id="@+id/etJudul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             android:hint="Judul Buku"
-            android:textSize="20sp" />
-
+            android:textSize="20sp"
+            android:layout_marginTop="6dp"
+            android:inputType="text"
+            />
         <EditText
-            android:id="@+id/et_penulis"
+            android:id="@+id/etPenulis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             android:hint="Penulis Buku"
-            android:textSize="20sp" />
-
+            android:textSize="20sp"
+            android:layout_marginTop="6dp"
+            android:inputType="text"
+            />
         <EditText
-            android:id="@+id/et_tahun"
+            android:id="@+id/etTahun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             android:hint="Tahun Terbit Buku"
+            android:textSize="20sp"
+            android:layout_marginTop="6dp"
             android:inputType="number"
-            android:textSize="20sp" />
-
+            />
 
         <Button
-            android:id="@+id/btn_simpan"
+            android:id="@+id/btnUbah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="UBAH"
             android:layout_marginTop="32dp"
-            android:text="SIMPAN" />
+            />
 
     </LinearLayout>
 

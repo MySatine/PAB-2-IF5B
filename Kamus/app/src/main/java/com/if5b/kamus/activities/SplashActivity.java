@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.if5b.kamus.R;
 import com.if5b.kamus.databases.KamusHelper;
@@ -57,11 +58,25 @@ public class SplashActivity extends AppCompatActivity {
                 Double progressMaxInsert = 80.0;
                 Double progressDiff = (progressMaxInsert - progress) / kamusEnglishIndonesia.size();
 
-                for (Kamus kamus : kamusEnglishIndonesia) {
-                    kamusHelper.insertData(kamus);
-                    progress += progressDiff;
-                    publishProgress((int) progress);
+//                for (Kamus kamus : kamusEnglishIndonesia) {
+//                    kamusHelper.insertData(kamus);
+//                    progress += progressDiff;
+//                    publishProgress((int) progress);
+//                }
+                kamusHelper.beginTransaction();
+
+                try {
+                    for (Kamus kamus : kamusEnglishIndonesia) {
+                        kamusHelper.insertTransactionData(kamus);
+                        progress += progressDiff;
+                        publishProgress((int) progress);
+                    }
+                    kamusHelper.setTransactionSuccess();
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
                 }
+
+                kamusHelper.endTransaction();
 
                 kamusHelper.close();
                 appPreference.setFirstRun(false);

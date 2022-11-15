@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.fabInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InputActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

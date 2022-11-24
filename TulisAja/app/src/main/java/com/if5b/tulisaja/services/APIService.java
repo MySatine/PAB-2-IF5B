@@ -24,7 +24,7 @@ public interface APIService {
 
     @POST("getAllPost")
     @FormUrlEncoded
-    Call<ValueData<Post>> getPost(@Field("key") String key);
+    Call<ValueData<Post>> getAllPost(@Field("key") String key);
 
     @POST("insertPost")
     @FormUrlEncoded

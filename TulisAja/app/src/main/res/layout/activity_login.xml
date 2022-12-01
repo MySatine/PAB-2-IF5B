@@ -50,7 +50,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
@@ -58,14 +57,13 @@
             android:layout_marginTop="16dp"
             android:text="Login" />
 
-
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_register"
+        android:layout_below="@id/ll_login"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
 

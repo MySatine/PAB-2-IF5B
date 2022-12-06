@@ -59,6 +59,15 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void register(String username, String password) {
@@ -72,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String message = response.body().getMessage();
                     if(success == 1) {
                         Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Utilities.setValue(RegisterActivity.this, "xUsername", username);
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

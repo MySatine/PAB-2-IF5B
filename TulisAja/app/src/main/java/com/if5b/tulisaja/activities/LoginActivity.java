@@ -2,9 +2,11 @@ package com.if5b.tulisaja.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.if5b.tulisaja.databinding.ActivityLoginBinding;
 import com.if5b.tulisaja.models.ValueNoData;
@@ -50,6 +52,15 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void login(String username, String password) {
@@ -58,12 +69,28 @@ public class LoginActivity extends AppCompatActivity {
         api.login(Utilities.TULIS_AJA_API_KEY, username,password).enqueue(new Callback<ValueNoData>() {
             @Override
             public void onResponse(Call<ValueNoData> call, Response<ValueNoData> response) {
-
+                if(response.code() == 200) {
+                    int success = response.body().getSuccess();
+                    String message = response.body().getMessage();
+                    if(success == 1) {
+                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Utilities.setValue(LoginActivity.this, "xUsername", username);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this,
+                            "Response Code : " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+                hideProgressBar();
             }
 
             @Override
             public void onFailure(Call<ValueNoData> call, Throwable t) {
-
+                hideProgressBar();
+                Toast.makeText(LoginActivity.this,
+                        "Error : " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
